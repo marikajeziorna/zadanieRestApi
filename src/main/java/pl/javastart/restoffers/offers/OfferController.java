@@ -7,6 +7,7 @@ import pl.javastart.restoffers.categories.Category;
 import pl.javastart.restoffers.categories.CategoryRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class OfferController {
@@ -51,5 +52,18 @@ public class OfferController {
         return ResponseEntity.ok(save);
     }
 
+    @GetMapping("/api/offers/{id}")
+    public ResponseEntity<Offer> getOfferBy(@PathVariable Long id){
+        Optional<Offer> optionalOffer = offerRepository.findById(id);
+        if(optionalOffer.isPresent()){
+            Offer offer = optionalOffer.get();
+            return ResponseEntity.ok(offer);
+        }
+        return ResponseEntity.notFound().build();
+    }
 
+    @DeleteMapping("/api/offers/{id}")
+    public void deleteOffer(@PathVariable Long id){
+        offerRepository.deleteById(id);
+    }
 }
