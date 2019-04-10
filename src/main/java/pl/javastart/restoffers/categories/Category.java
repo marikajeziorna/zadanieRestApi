@@ -1,9 +1,9 @@
 package pl.javastart.restoffers.categories;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import pl.javastart.restoffers.offers.Offer;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Category {
@@ -12,8 +12,12 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
+    private List<Offer> offers;
+
     private String name;
     private String description;
+
 
     public Long getId() {
         return id;
@@ -37,5 +41,13 @@ public class Category {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public void setOffers(List<Offer> offers) {
+        this.offers = offers;
     }
 }

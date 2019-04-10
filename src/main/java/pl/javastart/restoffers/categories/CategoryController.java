@@ -3,7 +3,6 @@ package pl.javastart.restoffers.categories;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
 import java.util.List;
 
 @RestController
@@ -16,7 +15,7 @@ public class CategoryController {
     }
 
     @GetMapping("/api/categories")
-    public List<Category> getAllCategories(){
+    public List<Category> getAllCategories() {
         return categoryRepository.findAll();
     }
 
@@ -29,8 +28,8 @@ public class CategoryController {
 
     @PostMapping("/api/categories")
     @ResponseBody
-    public ResponseEntity<Category> addCategory(@RequestBody Category category){
-        if (category.getId() !=null){
+    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
+        if (category.getId() != null) {
             ResponseEntity.BodyBuilder bodyBuilder = ResponseEntity.badRequest();
             bodyBuilder.build();
         }
@@ -39,12 +38,12 @@ public class CategoryController {
     }
 
     @GetMapping("/api/categories/names")
-    public List<String> getAllCategory(){
+    public List<String> getAllCategory() {
         return categoryRepository.findAllNames();
     }
 
     @DeleteMapping("/api/categories/{id}")
-    public void deleteOffer(@PathVariable Long id){
+    public void deleteOffer(@PathVariable Long id) {
         categoryRepository.deleteById(id);
     }
 

@@ -9,5 +9,4 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Query(value = "select name from category", nativeQuery = true)
     List<String> findAllNames();
-
 }

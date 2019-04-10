@@ -1,21 +1,31 @@
 package pl.javastart.restoffers.offers;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import pl.javastart.restoffers.categories.Category;
+
+import javax.persistence.*;
+
 
 @Entity
 public class Offer {
 
+    @ManyToOne
+    public Category category;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String title;
     private String description;
     private String imgUrl;
     private Long price;
+
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public Long getId() {
         return id;
