@@ -3,6 +3,7 @@ package pl.javastart.restoffers.offers;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.javastart.restoffers.categories.Category;
+import pl.javastart.restoffers.categories.CategoryRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,9 +12,11 @@ import java.util.Optional;
 public class OfferController {
 
     private OfferRepository offerRepository;
+    private CategoryRepository categoryRepository;
 
     public OfferController(OfferRepository offerRepository) {
         this.offerRepository = offerRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/api/offers/count")
@@ -32,19 +35,12 @@ public class OfferController {
 
     @PostMapping("/api/offers")
     @ResponseBody
-    public ResponseEntity<Offer> addOffer(@RequestParam Offer offer, @RequestParam Category category) {
-        if (offer.getId() != null) {
+    public ResponseEntity<Offer> addOffer(@RequestBody Offer offer, Category category){
+        if (offer.getId() !=null){
             ResponseEntity.BodyBuilder bodyBuilder = ResponseEntity.badRequest();
             bodyBuilder.build();
         }
-        offer.setCategory(category);
         Offer save = offerRepository.save(offer);
-
-//        Offer save = null;
-//        save.setCategory(category);
-//        save.setCategory(category);
-//        Offer save = offerRepository
-//                .save(offer);
         return ResponseEntity.ok(save);
     }
 

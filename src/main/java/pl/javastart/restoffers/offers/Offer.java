@@ -1,5 +1,4 @@
 package pl.javastart.restoffers.offers;
-
 import pl.javastart.restoffers.categories.Category;
 
 import javax.persistence.*;
@@ -9,6 +8,7 @@ import javax.persistence.*;
 public class Offer {
 
     @ManyToOne
+    @JoinColumn(name = "id_category")
     public Category category;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

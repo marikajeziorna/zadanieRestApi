@@ -1,7 +1,7 @@
-insert into offer (id, title, description, img_url, price) values
-(1, 'punto', 'Fiat w dieslu w dobrym stanie, bezwypadkowy', 'http://bi.gazeta.pl/im/6/11041/z11041516Q,6--Fiat-Punto-hatchback-1-2-60-KM--621-sztuk---rok.jpg', 400),
-(2, 'Ursus', 'Ciągnik z kabiną', 'https://thumbs.img-sprzedajemy.pl/1000x901c/09/33/ed/ursus-c360-ciagniki-386707237.jpg', 300);
+insert into category (id_category, name, description) values
+(1, 'Adidasy', 'Obuwie sportowe'),
+(2, 'Galanteria skórzana', 'Walizki, torby, torebli, portfele z eko skóry');
 
-insert into category (id, name, description) values
-(1, 'samochody', 'Pojazdy jedno i dwuśladowe'),
-(2, 'agd', 'Sprzęty gospodarstawa domowego');
+insert into offer (id, title, description, img_url, price, id_category) values
+(1, 'Puma', 'Czarne z złotymi wstawkami, rozmiar 39', 'https://st.allani.pl/t/1-YDS-qfDAeJumDaVgkuvc6SDXI=/300x300/czarne-buty-sportowe-puma-sznurowane-889f9baa36bc70c6cc1287f597e8dd2fe254b232.jpg', 380, 1),
+(2, 'Torba wittchen ', 'Czarna toreba na ramie', 'https://lb0.dstatic.pl/images/58768298/I250x250.jpg', 390, 2);

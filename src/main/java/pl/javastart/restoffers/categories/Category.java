@@ -1,5 +1,6 @@
 package pl.javastart.restoffers.categories;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import pl.javastart.restoffers.offers.Offer;
 
 import javax.persistence.*;
@@ -10,8 +11,9 @@ public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idCategory;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
     private List<Offer> offers;
 
@@ -19,12 +21,12 @@ public class Category {
     private String description;
 
 
-    public Long getId() {
-        return id;
+    public Long getIdCategory() {
+        return idCategory;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdCategory(Long idCategory) {
+        this.idCategory = idCategory;
     }
 
     public String getName() {

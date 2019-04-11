@@ -19,17 +19,10 @@ public class CategoryController {
         return categoryRepository.findAll();
     }
 
-//    TODO count category number
-//    @GetMapping("/api/categories/count")
-//    public Long getCategoryNumber(){
-//        return categoryRepository.count();
-//    }
-
-
     @PostMapping("/api/categories")
     @ResponseBody
     public ResponseEntity<Category> addCategory(@RequestBody Category category) {
-        if (category.getId() != null) {
+        if (category.getIdCategory() != null) {
             ResponseEntity.BodyBuilder bodyBuilder = ResponseEntity.badRequest();
             bodyBuilder.build();
         }
