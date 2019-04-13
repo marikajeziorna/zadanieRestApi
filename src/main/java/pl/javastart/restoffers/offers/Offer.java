@@ -1,23 +1,35 @@
 package pl.javastart.restoffers.offers;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import pl.javastart.restoffers.categories.Category;
 
 import javax.persistence.*;
 
-
 @Entity
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Offer {
 
     @ManyToOne
     @JoinColumn(name = "id_category")
-    public Category category;
+    private Category category;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String description;
     private String imgUrl;
-    private Long price;
+    private Double price;
 
+    public Offer(Category category, String title, String description, String imgUrl, Double price) {
+        this.category = category;
+        this.title = title;
+        this.description = description;
+        this.imgUrl = imgUrl;
+        this.price = price;
+    }
+
+    public Offer() {
+    }
 
     public Category getCategory() {
         return category;
@@ -59,11 +71,11 @@ public class Offer {
         this.imgUrl = imgUrl;
     }
 
-    public Long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 }

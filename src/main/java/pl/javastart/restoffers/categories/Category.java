@@ -1,24 +1,28 @@
 package pl.javastart.restoffers.categories;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import pl.javastart.restoffers.offers.Offer;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+//@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="idCategory")
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCategory;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "category", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     private List<Offer> offers;
 
     private String name;
     private String description;
+
+    public Category(String name, String description) {
+    }
 
 
     public Long getIdCategory() {

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.javastart.restoffers.categories.Category;
 import pl.javastart.restoffers.categories.CategoryRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,48 +15,62 @@ public class OfferController {
     private OfferRepository offerRepository;
     private CategoryRepository categoryRepository;
 
+    public OfferController() {
+    }
+
     public OfferController(OfferRepository offerRepository) {
         this.offerRepository = offerRepository;
         this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("/api/offers/count")
-    public Long getOfferNumbers() {
-        return offerRepository.count();
+    public int getOfferNumbers() {
+        final int offerNumber = (int) offerRepository.count();
+        return offerNumber;
     }
 
     @GetMapping("/api/offers")
-    public List<Offer> searchOffer(@RequestParam(required = false) String title) {
+    public List<OfferDto> searchOffer(@RequestParam(required = false) String title) {
+        List<OfferDto> offerDtoList = new ArrayList<>();
+        List<Offer> offers;
+
         if (title == null || title == "") {
-            return offerRepository.findAll();
+            offers = offerRepository.findAll();
         } else {
-            return offerRepository.findByTitle(title);
+            offers = offerRepository.findByTitle(title.toLowerCase());
         }
+
+        for (Offer offer : offers) {
+            OfferDto offerDto = new OfferDto(offer.getId(), offer.getTitle(), offer.getDescription(), offer.getImgUrl(), offer.getPrice(), offer.getCategory().getName());
+            offerDtoList.add(offerDto);
+        }
+        return offerDtoList;
     }
 
     @PostMapping("/api/offers")
-    @ResponseBody
-    public ResponseEntity<Offer> addOffer(@RequestBody Offer offer, Category category){
-        if (offer.getId() !=null){
-            ResponseEntity.BodyBuilder bodyBuilder = ResponseEntity.badRequest();
-            bodyBuilder.build();
-        }
-        Offer save = offerRepository.save(offer);
-        return ResponseEntity.ok(save);
+    public void addOffer(@RequestBody OfferDto offerDto) {
+        Category category = categoryRepository.findByName(offerDto.getCategory());
+
+        Offer offer = new Offer(category, offerDto.getTitle(), offerDto.getDescription(), offerDto.getImgUrl(), offerDto.getPrice());
+        offerRepository.save(offer);
     }
 
     @GetMapping("/api/offers/{id}")
-    public ResponseEntity<Offer> getOfferBy(@PathVariable Long id) {
+    public ResponseEntity<OfferDto> getOfferBy(@PathVariable Long id) {
         Optional<Offer> optionalOffer = offerRepository.findById(id);
         if (optionalOffer.isPresent()) {
             Offer offer = optionalOffer.get();
-            return ResponseEntity.ok(offer);
+            OfferDto offerDto = new OfferDto(offer.getId(), offer.getTitle(), offer.getDescription(), offer.getImgUrl(), offer.getPrice(), offer.getCategory().getName());
+            return ResponseEntity.ok(offerDto);
         }
         return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/api/offers/{id}")
     public void deleteOffer(@PathVariable Long id) {
-        offerRepository.deleteById(id);
+        Optional<Offer> offerRepositoryById = offerRepository.findById(id);
+        if(offerRepositoryById.isPresent()){
+            offerRepository.delete(offerRepositoryById.get());
+        }
     }
 }

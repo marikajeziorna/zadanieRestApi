@@ -1,33 +1,28 @@
 package pl.javastart.restoffers.categories;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CategoryController {
 
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     public CategoryController(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
-    @GetMapping("/api/categories")
-    public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
-    }
+//    @GetMapping("/api/categories")
+//    public List<Category> getAllCategories() {
+//        return categoryRepository.findAll();
+//    }
 
     @PostMapping("/api/categories")
-    @ResponseBody
-    public ResponseEntity<Category> addCategory(@RequestBody Category category) {
-        if (category.getIdCategory() != null) {
-            ResponseEntity.BodyBuilder bodyBuilder = ResponseEntity.badRequest();
-            bodyBuilder.build();
-        }
-        Category save = categoryRepository.save(category);
-        return ResponseEntity.ok(save);
+    public void addCategory(@RequestBody CategoryDto categoryDto) {
+      Category category = new Category(categoryDto.getName(), categoryDto.getDescription());
+      categoryRepository.save(category);
     }
 
     @GetMapping("/api/categories/names")
@@ -36,8 +31,11 @@ public class CategoryController {
     }
 
     @DeleteMapping("/api/categories/{id}")
-    public void deleteOffer(@PathVariable Long id) {
-        categoryRepository.deleteById(id);
+    public void deleteCategory(@PathVariable Long id) {
+        Optional<Category> categoryRepositoryById = categoryRepository.findById(id);
+        if(categoryRepositoryById.isPresent()){
+            categoryRepository.delete(categoryRepositoryById.get());
+        }
     }
 
 }
