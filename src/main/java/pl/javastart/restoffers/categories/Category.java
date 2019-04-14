@@ -8,8 +8,11 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-//@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="idCategory")
+@JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="idCategory")
 public class Category {
+
+    public Category() {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

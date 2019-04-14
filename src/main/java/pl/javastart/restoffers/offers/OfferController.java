@@ -1,5 +1,6 @@
 package pl.javastart.restoffers.offers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.javastart.restoffers.categories.Category;
@@ -18,6 +19,7 @@ public class OfferController {
     public OfferController() {
     }
 
+    @Autowired
     public OfferController(OfferRepository offerRepository) {
         this.offerRepository = offerRepository;
         this.categoryRepository = categoryRepository;
@@ -34,7 +36,7 @@ public class OfferController {
         List<OfferDto> offerDtoList = new ArrayList<>();
         List<Offer> offers;
 
-        if (title == null || title == "") {
+        if (title == null || title.equals("")) {
             offers = offerRepository.findAll();
         } else {
             offers = offerRepository.findByTitle(title.toLowerCase());

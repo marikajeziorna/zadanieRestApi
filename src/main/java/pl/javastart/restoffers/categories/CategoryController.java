@@ -1,5 +1,6 @@
 package pl.javastart.restoffers.categories;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,14 +11,15 @@ public class CategoryController {
 
     private CategoryRepository categoryRepository;
 
+    @Autowired
     public CategoryController(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
-//    @GetMapping("/api/categories")
-//    public List<Category> getAllCategories() {
-//        return categoryRepository.findAll();
-//    }
+    @GetMapping("/api/categories")
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
+    }
 
     @PostMapping("/api/categories")
     public void addCategory(@RequestBody CategoryDto categoryDto) {
