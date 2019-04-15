@@ -35,9 +35,6 @@ public class CategoryController {
     @DeleteMapping("/api/categories/{id}")
     public void deleteCategory(@PathVariable Long id) {
         Optional<Category> categoryRepositoryById = categoryRepository.findById(id);
-        if(categoryRepositoryById.isPresent()){
-            categoryRepository.delete(categoryRepositoryById.get());
-        }
+        categoryRepositoryById.ifPresent(category -> categoryRepository.delete(category));
     }
-
 }

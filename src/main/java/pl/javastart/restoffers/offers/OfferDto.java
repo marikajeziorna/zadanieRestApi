@@ -17,6 +17,9 @@ public class OfferDto {
         this.category = category;
     }
 
+    public OfferDto() {
+    }
+
     public long getId() {
         return id;
     }

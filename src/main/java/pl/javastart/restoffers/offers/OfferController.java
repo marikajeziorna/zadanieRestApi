@@ -20,7 +20,7 @@ public class OfferController {
     }
 
     @Autowired
-    public OfferController(OfferRepository offerRepository) {
+    public OfferController(OfferRepository offerRepository, CategoryRepository categoryRepository) {
         this.offerRepository = offerRepository;
         this.categoryRepository = categoryRepository;
     }

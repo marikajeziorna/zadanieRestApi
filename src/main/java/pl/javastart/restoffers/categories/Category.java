@@ -11,9 +11,6 @@ import java.util.List;
 @JsonIdentityInfo(generator= ObjectIdGenerators.PropertyGenerator.class, property="idCategory")
 public class Category {
 
-    public Category() {
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCategory;
@@ -24,7 +21,11 @@ public class Category {
     private String name;
     private String description;
 
+    public Category(){}
+
     public Category(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
 
